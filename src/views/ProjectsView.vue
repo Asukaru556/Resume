@@ -75,7 +75,7 @@ const getTypeStyle = (type) => typeStyles[type] || typeStyles['Пет-проек
 const slideScroll = ref(0.5)
 
 const updateSlideScroll = () => {
-  slideScroll.value = window.innerWidth <= 900 ? 1.2 : 0.5
+  slideScroll.value = window.innerWidth <= 900 ? 2.2 : 0.5
 }
 
 const activeIndex = ref(0)
@@ -85,58 +85,38 @@ const sectionHeight = computed(() => {
   return `calc(100vh + ${(projects.length - 1) * slideScroll.value * 100}vh)`
 })
 
-let scrollTimer = null
-
-const handleScroll = () => {
-  clearTimeout(scrollTimer)
-  scrollTimer = setTimeout(handleScrollEnd, 100)
-}
-
-const handleScrollEnd = () => {
+const updateIndex = () => {
   if (!container.value) return
 
   const rect = container.value.getBoundingClientRect()
   const scrolled = Math.max(0, -rect.top)
   const slideHeight = window.innerHeight * slideScroll.value
-
-  const rawIndex = Math.round(scrolled / slideHeight)
-  const targetIndex = Math.max(0, Math.min(projects.length - 1, rawIndex))
-
-  const diff = targetIndex - activeIndex.value
-
-  let newIndex = activeIndex.value
-  if (diff > 0) newIndex = activeIndex.value + 1
-  else if (diff < 0) newIndex = activeIndex.value - 1
-
-  newIndex = Math.max(0, Math.min(projects.length - 1, newIndex))
-
-  if (newIndex !== activeIndex.value) {
-    activeIndex.value = newIndex
-  }
+  const index = Math.round(scrolled / slideHeight)
+  activeIndex.value = Math.max(0, Math.min(projects.length - 1, index))
 }
 
 const scrollToProject = (i) => {
   if (!container.value) return
   const slideHeight = window.innerHeight * slideScroll.value
   const top = container.value.offsetTop + i * slideHeight
-  activeIndex.value = i
   window.scrollTo({ top, behavior: 'smooth' })
 }
 
 const handleResize = () => {
   updateSlideScroll()
+  updateIndex()
 }
 
 onMounted(() => {
   updateSlideScroll()
-  window.addEventListener('scroll', handleScroll, { passive: true })
+  window.addEventListener('scroll', updateIndex, { passive: true })
   window.addEventListener('resize', handleResize)
+  updateIndex()
 })
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('scroll', updateIndex)
   window.removeEventListener('resize', handleResize)
-  clearTimeout(scrollTimer)
 })
 </script>
 
