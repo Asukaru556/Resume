@@ -72,8 +72,8 @@ const typeStyles = {
 
 const getTypeStyle = (type) => typeStyles[type] || typeStyles['Пет-проект']
 
+// ===== АДАПТИВНАЯ ЧУВСТВИТЕЛЬНОСТЬ =====
 const slideScroll = ref(0.5)
-
 const updateSlideScroll = () => {
   slideScroll.value = window.innerWidth <= 900 ? 1.2 : 0.5
 }
@@ -85,38 +85,75 @@ const sectionHeight = computed(() => {
   return `calc(100vh + ${(projects.length - 1) * slideScroll.value * 100}vh)`
 })
 
-const updateIndex = () => {
+// ===== ОГРАНИЧЕНИЕ: 1 ПРОЕКТ ЗА ОДНО ДВИЖЕНИЕ =====
+let scrollEndTimer = null
+let isAdjusting = false  // true, пока идёт авто-выравнивание
+
+const onScroll = () => {
+  // Игнорируем скролл, пока идёт наша анимация выравнивания
+  if (isAdjusting) return
+
+  // Сбрасываем таймер на каждый скролл — ждём, когда закончит
+  clearTimeout(scrollEndTimer)
+  scrollEndTimer = setTimeout(handleScrollEnd, 120)
+}
+
+const handleScrollEnd = () => {
   if (!container.value) return
 
   const rect = container.value.getBoundingClientRect()
   const scrolled = Math.max(0, -rect.top)
   const slideHeight = window.innerHeight * slideScroll.value
-  const index = Math.round(scrolled / slideHeight)
-  activeIndex.value = Math.max(0, Math.min(projects.length - 1, index))
+
+  // Куда пользователь «приземлился»
+  const rawIndex = Math.round(scrolled / slideHeight)
+  const targetIndex = Math.max(0, Math.min(projects.length - 1, rawIndex))
+
+  // Сколько шагов он хочет пройти
+  const diff = targetIndex - activeIndex.value
+
+  // Ограничиваем: не больше 1 шага за раз
+  const limitedIndex = Math.abs(diff) > 1
+    ? activeIndex.value + Math.sign(diff)
+    : targetIndex
+
+  activeIndex.value = limitedIndex
+
+  // Выравниваем скролл, чтобы позиция совпадала с активным проектом
+  const targetScroll = container.value.offsetTop + limitedIndex * slideHeight
+  if (Math.abs(window.scrollY - targetScroll) > 2) {
+    isAdjusting = true
+    window.scrollTo({ top: targetScroll, behavior: 'smooth' })
+    // Отключаем блокировку через 700 мс — столько длится smooth-скролл
+    setTimeout(() => { isAdjusting = false }, 700)
+  }
 }
 
 const scrollToProject = (i) => {
   if (!container.value) return
   const slideHeight = window.innerHeight * slideScroll.value
   const top = container.value.offsetTop + i * slideHeight
+  isAdjusting = true
+  activeIndex.value = i
   window.scrollTo({ top, behavior: 'smooth' })
+  setTimeout(() => { isAdjusting = false }, 400)
 }
 
 const handleResize = () => {
   updateSlideScroll()
-  updateIndex()
+  handleScrollEnd()
 }
 
 onMounted(() => {
   updateSlideScroll()
-  window.addEventListener('scroll', updateIndex, { passive: true })
+  window.addEventListener('scroll', onScroll, { passive: true })
   window.addEventListener('resize', handleResize)
-  updateIndex()
 })
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', updateIndex)
+  window.removeEventListener('scroll', onScroll)
   window.removeEventListener('resize', handleResize)
+  clearTimeout(scrollEndTimer)
 })
 </script>
 
