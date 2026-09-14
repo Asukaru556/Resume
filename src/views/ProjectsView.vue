@@ -75,7 +75,7 @@ const getTypeStyle = (type) => typeStyles[type] || typeStyles['Пет-проек
 const slideScroll = ref(0.5)
 
 const updateSlideScroll = () => {
-  slideScroll.value = window.innerWidth <= 900 ? 2.2 : 0.5
+  slideScroll.value = window.innerWidth <= 900 ? 2 : 0.5
 }
 
 const activeIndex = ref(0)
