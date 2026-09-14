@@ -45,9 +45,9 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import SocialIcons from './SocialIcons.vue'
 
 const photos = [
-  '/public/ava/5269718787236240676.jpg',
-  '/public/ava/5269718787236240677.jpg',
-  '/public/ava/5269718787236240678.jpg'
+  '/ava/5269718787236240676.jpg',
+  '/ava/5269718787236240677.jpg',
+  '/ava/5269718787236240678.jpg'
 ]
 
 const currentIndex = ref(0)
