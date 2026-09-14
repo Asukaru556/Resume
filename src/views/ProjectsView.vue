@@ -66,45 +66,60 @@ const projects = [
 const typeStyles = {
   'Практика':    { bg: 'rgba(30, 94, 255, 0.12)',  color: '#1e5eff' },
   'Пет-проект':  { bg: 'rgba(139, 92, 246, 0.12)', color: '#8b5cf6' },
+  'Тестовое задание': { bg: 'rgba(245, 158, 11, 0.12)', color: '#f59e0b' },
   'Заказ':       { bg: 'rgba(16, 185, 129, 0.12)', color: '#10b981' }
 }
 
 const getTypeStyle = (type) => typeStyles[type] || typeStyles['Пет-проект']
 
-const SLIDE_SCROLL = 0.5
+// ====== АДАПТИВНАЯ ЧУВСТВИТЕЛЬНОСТЬ ======
+// На десктопе 0.5 экрана на проект, на мобилке 1.2 экрана (чувствительность ниже)
+const slideScroll = ref(0.5)
+
+const updateSlideScroll = () => {
+  slideScroll.value = window.innerWidth <= 900 ? 1.2 : 0.5
+}
 
 const activeIndex = ref(0)
 const container = ref(null)
 
 const sectionHeight = computed(() => {
-  return `calc(100vh + ${(projects.length - 1) * SLIDE_SCROLL * 100}vh)`
+  return `calc(100vh + ${(projects.length - 1) * slideScroll.value * 100}vh)`
 })
 
 const updateIndex = () => {
   if (!container.value) return
+
   const rect = container.value.getBoundingClientRect()
   const scrolled = Math.max(0, -rect.top)
-  const slideHeight = window.innerHeight * SLIDE_SCROLL
+  const slideHeight = window.innerHeight * slideScroll.value
   const index = Math.round(scrolled / slideHeight)
   activeIndex.value = Math.max(0, Math.min(projects.length - 1, index))
 }
 
 const scrollToProject = (i) => {
   if (!container.value) return
-  const slideHeight = window.innerHeight * SLIDE_SCROLL
+  const slideHeight = window.innerHeight * slideScroll.value
   const top = container.value.offsetTop + i * slideHeight
   window.scrollTo({ top, behavior: 'smooth' })
 }
 
+// Отдельная функция для resize, чтобы можно было корректно снять слушатель
+const handleResize = () => {
+  updateSlideScroll()
+  updateIndex()
+}
+
 onMounted(() => {
+  updateSlideScroll()
   window.addEventListener('scroll', updateIndex, { passive: true })
-  window.addEventListener('resize', updateIndex)
+  window.addEventListener('resize', handleResize)
   updateIndex()
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', updateIndex)
-  window.removeEventListener('resize', updateIndex)
+  window.removeEventListener('resize', handleResize)
 })
 </script>
 
