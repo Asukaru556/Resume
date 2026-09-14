@@ -72,12 +72,10 @@ const typeStyles = {
 
 const getTypeStyle = (type) => typeStyles[type] || typeStyles['Пет-проект']
 
-// ====== АДАПТИВНАЯ ЧУВСТВИТЕЛЬНОСТЬ ======
-// На десктопе 0.5 экрана на проект, на мобилке 1.2 экрана (чувствительность ниже)
 const slideScroll = ref(0.5)
 
 const updateSlideScroll = () => {
-  slideScroll.value = window.innerWidth <= 900 ? 1.2 : 0.5
+  slideScroll.value = window.innerWidth <= 900 ? 1 : 0.5
 }
 
 const activeIndex = ref(0)
@@ -104,7 +102,6 @@ const scrollToProject = (i) => {
   window.scrollTo({ top, behavior: 'smooth' })
 }
 
-// Отдельная функция для resize, чтобы можно было корректно снять слушатель
 const handleResize = () => {
   updateSlideScroll()
   updateIndex()
