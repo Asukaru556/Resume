@@ -1,12 +1,12 @@
 :root,
 [data-theme="light"] {
-  --bg: #ebe8e8;
+  --bg: #e6e3e3;
   --bg-secondary: #ffffff;
   --beige: #e5ded4;
   --text: #1a1a1a;
-  --text-muted: #555555;
+  --text-muted: #353333;
   --border: #e5e4e7;
-  --accent: #ffa51e;
+  --accent: #f59300;
   --social-bg: #ffffff;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.15); 
   --card-border: rgba(0, 0, 0, 0.06);    
