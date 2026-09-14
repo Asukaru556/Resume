@@ -3,7 +3,7 @@
     <div class="footer-left">
       <p>© 2026 by Askar Abduvaliev.</p>
     </div>
-    
+
     <div class="footer-right">
       <div class="contact-col">
         <h4>Телефон</h4>
@@ -76,5 +76,50 @@ import SocialIcons from './SocialIcons.vue'
 
 .footer-right :deep(.social-link:hover) {
   color: var(--accent);
+}
+
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px 20px;
+    text-align: center;
+  }
+
+  .footer-right {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .contact-col h4 {
+    font-size: 11px;
+  }
+
+  .contact-col p {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 16px 14px;
+    gap: 12px;
+  }
+
+  .footer-left p {
+    font-size: 11px;
+  }
+
+  .footer-right {
+    gap: 12px;
+  }
+
+  .contact-col h4 {
+    font-size: 10px;
+  }
+
+  .contact-col p {
+    font-size: 11px;
+  }
 }
 </style>

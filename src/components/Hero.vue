@@ -2,24 +2,24 @@
   <section class="hero-section">
     <div class="hero-left">
       <div class="beige-background"></div>
-      
+
       <div class="profile-card">
         <div class="card-content">
-            <div class="avatar-container">
-              <img
-                v-for="(photo, index) in photos"
-                :key="index"
-                :src="photo"
-               alt="Askar Abduvaliev"
-                class="avatar"
-                :class="{ 'active': index === currentIndex }"
-              />
-            </div>
+          <div class="avatar-container">
+            <img
+              v-for="(photo, index) in photos"
+              :key="index"
+              :src="photo"
+              alt="Askar Abduvaliev"
+              class="avatar"
+              :class="{ 'active': index === currentIndex }"
+            />
+          </div>
           <h2 class="card-name">Askar<br>Abduvaliev</h2>
           <div class="blue-line"></div>
           <p class="card-role">Frontend-Developer</p>
         </div>
-        
+
         <SocialIcons />
       </div>
     </div>
@@ -27,14 +27,14 @@
     <div class="hero-right">
       <h1 class="greeting">Привет!</h1>
       <p class="subtitle">Здесь вы узнаете кто я и чем занимаюсь</p>
-      
+
       <div class="buttons">
         <RouterLink to="/projects" class="btn btn-primary">ПРОЕКТЫ</RouterLink>
       </div>
-      
+
       <div class="description">
-        <p>Меня зовут Аскар, я стдуент 3 курса направления frontend-разработчик. Специализируюсь на создании пользовательских интерфейсов на Vue 3, React. В работе использую JavaScript/TypeScript, Pinia, Vue Router, Vite, REST API и Git.</p>
-        <p>Мне важно, чтобы код был не только рабочим, но и понятным, а интерфейс - быстрым и удобным для пользователя. Легко нахожу общий язык с командой, беру ответственность за задачи и постоянно учусь новому.</p>
+        <p>Меня зовут Аскар, я студент 3 курса направления frontend-разработчик. Специализируюсь на создании пользовательских интерфейсов на Vue 3, React. В работе использую JavaScript/TypeScript, Pinia, Vue Router, Vite, REST API и Git.</p>
+        <p>Мне важно, чтобы код был не только рабочим, но и понятным, а интерфейс — быстрым и удобным для пользователя. Легко нахожу общий язык с командой, беру ответственность за задачи и постоянно учусь новому.</p>
       </div>
     </div>
   </section>
@@ -51,7 +51,6 @@ const photos = [
 ]
 
 const currentIndex = ref(0)
-const isAnimating = ref(false)
 
 let intervalId = null
 
@@ -64,14 +63,13 @@ onMounted(() => {
     const img = new Image()
     img.src = src
   })
-  
+
   intervalId = setInterval(nextPhoto, 5000)
 })
 
 onUnmounted(() => {
   clearInterval(intervalId)
 })
-
 </script>
 
 <style scoped>
@@ -87,6 +85,7 @@ onUnmounted(() => {
   position: relative;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
 
 .beige-background {
@@ -101,7 +100,6 @@ onUnmounted(() => {
   background-position: center;
   background-repeat: no-repeat;
   z-index: 1;
-  transition: background-color 0.4s ease;
 }
 
 .profile-card {
@@ -110,7 +108,6 @@ onUnmounted(() => {
   width: 320px;
   background-color: var(--bg-secondary);
   margin-right: -50px;
-  align-self: center;
   box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
@@ -134,6 +131,11 @@ onUnmounted(() => {
   margin-bottom: 20px;
   background-color: #ccc;
   position: relative;
+  border: 3px solid var(--accent);
+  box-shadow:
+    0 0 20px 3px rgba(255, 165, 30, 0.5),
+    0 0 40px 8px rgba(255, 165, 30, 0.2);
+  transition: box-shadow 0.4s ease, border-color 0.4s ease;
 }
 
 .avatar {
@@ -176,32 +178,6 @@ onUnmounted(() => {
   color: var(--text);
 }
 
-.card-socials {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  padding: 15px;
-  background-color: var(--bg-secondary); 
-  transition: background-color 0.4s ease;
-}
-
-.card-socials a,
-.social-link {
-  color: var(--text);
-  text-decoration: none;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.card-socials a:hover,
-.social-link:hover {
-  color: var(--accent);
-  transform: translateY(-2px);
-}
-
 .hero-right {
   flex: 1;
   display: flex;
@@ -209,7 +185,6 @@ onUnmounted(() => {
   justify-content: center;
   padding: 40px 10% 40px 80px;
   gap: 20px;
-  transition: background-color 0.4s ease;
 }
 
 .greeting {
@@ -218,14 +193,12 @@ onUnmounted(() => {
   line-height: 1.1;
   margin: 0 0 5px 0;
   color: var(--text);
-  transition: color 0.4s ease;
 }
 
 .subtitle {
   font-size: 18px;
   margin: 0 0 10px 0;
   color: var(--text);
-  transition: color 0.4s ease;
 }
 
 .buttons {
@@ -241,13 +214,11 @@ onUnmounted(() => {
   font-weight: bold;
   cursor: pointer;
   letter-spacing: 1px;
-  transition: all 0.3s ease;   
+  transition: all 0.3s ease;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  overflow: hidden;
 }
 
 .btn-primary {
@@ -259,12 +230,12 @@ onUnmounted(() => {
 .btn-primary:hover {
   background-color: var(--text);
   color: var(--bg);
-  transform: translateY(-2px);  
-  box-shadow: 0 8px 20px rgba(30, 94, 255, 0.3); 
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 165, 30, 0.35);
 }
 
 .btn-primary:active {
-  transform: translateY(0);   
+  transform: translateY(0);
 }
 
 .description p {
@@ -272,6 +243,114 @@ onUnmounted(() => {
   line-height: 1.6;
   color: var(--text-muted);
   margin: 0 0 15px 0;
-  transition: color 0.4s ease;
+}
+
+@media (max-width: 1024px) {
+  .hero-right {
+    padding: 40px 6% 40px 60px;
+  }
+
+  .greeting {
+    font-size: 52px;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero-section {
+    flex-direction: column;
+  }
+
+  .hero-left {
+    flex: none;
+    width: 100%;
+    min-height: 380px;
+    justify-content: center;
+    padding: 30px 0;
+  }
+
+  .beige-background {
+    border-radius: 0;
+  }
+
+  .profile-card {
+    margin-right: 0;
+    width: 280px;
+  }
+
+  .hero-right {
+    flex: none;
+    width: 100%;
+    padding: 40px 24px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .greeting {
+    font-size: 44px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+  }
+
+  .description p {
+    font-size: 14px;
+  }
+
+  .buttons {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-left {
+    min-height: 340px;
+    padding: 20px 0;
+  }
+
+  .profile-card {
+    width: 240px;
+  }
+
+  .card-content {
+    padding: 30px 16px;
+  }
+
+  .avatar-container {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 15px;
+  }
+
+  .card-name {
+    font-size: 20px;
+  }
+
+  .card-role {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+  }
+
+  .hero-right {
+    padding: 30px 18px;
+    gap: 16px;
+  }
+
+  .greeting {
+    font-size: 34px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .description p {
+    font-size: 13px;
+  }
+
+  .btn {
+    padding: 10px 24px;
+    font-size: 11px;
+  }
 }
 </style>

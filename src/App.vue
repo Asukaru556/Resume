@@ -33,6 +33,7 @@ import Footer from './components/Footer.vue'
   flex-direction: column;
   width: 100%;
   position: relative;
+  overflow: clip;  
 }
 
 .page-fade-leave-active {
@@ -41,7 +42,7 @@ import Footer from './components/Footer.vue'
   top: 0;
   left: 0;
   width: 100%;
-  min-height: 86vh;
+  min-height: 100vh;
   z-index: 1;
 }
 
@@ -59,5 +60,15 @@ import Footer from './components/Footer.vue'
 .page-fade-enter-from {
   opacity: 0;
   transform: translateX(60px);
+}
+
+@media (max-width: 768px) {
+  .page-fade-leave-to {
+    transform: translateX(-30px);
+  }
+
+  .page-fade-enter-from {
+    transform: translateX(30px);
+  }
 }
 </style>

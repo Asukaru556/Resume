@@ -326,7 +326,7 @@ onUnmounted(() => {
   font-size: 12px;
   padding: 5px 12px;
   border-radius: 12px;
-  background-color: rgba(30, 94, 255, 0.1);
+  background-color: rgba(255, 165, 30, 0.12);
   color: var(--accent);
   letter-spacing: 0.5px;
   font-weight: 600;
@@ -390,7 +390,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 60px 60px 60px 60px;
+  padding: 60px;
   box-sizing: border-box;
 }
 
@@ -534,7 +534,7 @@ onUnmounted(() => {
 
   .card-slide {
     height: 50vh;
-    padding: 20px 6% 40px;
+    padding: 20px 30px;
   }
 
   .indicators {
@@ -543,6 +543,68 @@ onUnmounted(() => {
     bottom: 20px;
     transform: none;
     flex-direction: row;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-title {
+    font-size: 22px;
+  }
+
+  .project-description {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .project-subtitle {
+    font-size: 12px;
+  }
+
+  .project-tag {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+
+  .project-link {
+    font-size: 12px;
+    gap: 6px;
+  }
+
+  .project-info-layer {
+    padding: 12px 5%;
+  }
+
+  .card-slide {
+    padding: 12px 20px;
+  }
+
+  .project-card {
+    border-radius: 14px;
+    box-shadow: 0 0 20px 3px rgba(255, 165, 30, 0.35);
+  }
+
+  .card-overlay {
+    padding: 14px 16px;
+  }
+
+  .card-label {
+    font-size: 15px;
+  }
+
+  .card-type-badge {
+    font-size: 9px;
+    padding: 3px 8px;
+  }
+
+  .indicators {
+    right: 8px;
+    bottom: 12px;
+    gap: 8px;
+  }
+
+  .indicator {
+    width: 8px;
+    height: 8px;
   }
 }
 </style>

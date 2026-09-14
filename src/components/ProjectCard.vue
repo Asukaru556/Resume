@@ -105,7 +105,7 @@ defineProps({
   font-size: 11px;
   padding: 4px 10px;
   border-radius: 12px;
-  background-color: rgba(30, 94, 255, 0.1);
+  background-color: rgba(255, 165, 30, 0.12);
   color: var(--accent);
   letter-spacing: 0.5px;
   font-weight: 600;
@@ -124,5 +124,29 @@ defineProps({
 
 .project-card:hover .project-link {
   gap: 10px;
+}
+
+@media (max-width: 480px) {
+  .project-body {
+    padding: 14px;
+    gap: 8px;
+  }
+
+  .project-title {
+    font-size: 16px;
+  }
+
+  .project-description {
+    font-size: 12px;
+  }
+
+  .project-tag {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+
+  .project-link {
+    font-size: 12px;
+  }
 }
 </style>

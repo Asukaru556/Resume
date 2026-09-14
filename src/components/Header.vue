@@ -1,3 +1,4 @@
+<!-- src/components/Header.vue -->
 <script setup>
 import ThemeToggle from './ThemeToggle.vue'
 </script>
@@ -46,12 +47,14 @@ import ThemeToggle from './ThemeToggle.vue'
   background-color: var(--accent);
   border-radius: 50%;
   transition: background-color 0.4s ease;
+  flex-shrink: 0;
 }
 
 .name {
   font-weight: bold;
   font-size: 16px;
   color: var(--text);
+  white-space: nowrap;
 }
 
 .separator {
@@ -61,6 +64,7 @@ import ThemeToggle from './ThemeToggle.vue'
 .role {
   letter-spacing: 1px;
   color: var(--text);
+  white-space: nowrap;
 }
 
 .header-right {
@@ -82,6 +86,7 @@ import ThemeToggle from './ThemeToggle.vue'
   transition: color 0.3s;
   padding: 4px 0;
   position: relative;
+  white-space: nowrap;
 }
 
 .nav-link:hover {
@@ -90,5 +95,62 @@ import ThemeToggle from './ThemeToggle.vue'
 
 .nav-link.router-link-active {
   color: var(--accent);
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 12px 20px;
+    gap: 12px;
+  }
+
+  .logo-area {
+    gap: 8px;
+    font-size: 12px;
+  }
+
+  .name {
+    font-size: 13px;
+  }
+
+  .role,
+  .separator {
+    display: none;
+  }
+
+  .header-right {
+    gap: 12px;
+  }
+
+  .navigation {
+    gap: 14px;
+  }
+
+  .nav-link {
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 10px 14px;
+  }
+
+  .logo-icon {
+    width: 11px;
+    height: 11px;
+  }
+
+  .name {
+    font-size: 12px;
+  }
+
+  .navigation {
+    gap: 10px;
+  }
+
+  .nav-link {
+    font-size: 10px;
+  }
 }
 </style>
